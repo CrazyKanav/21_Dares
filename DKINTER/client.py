@@ -5,7 +5,7 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Connect to the server
 host = '10.0.65.5'
-port = 12348
+port = 5555
 s.connect((host, port))
 
 print('Connected to the server')
