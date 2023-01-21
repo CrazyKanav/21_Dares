@@ -1,54 +1,81 @@
 import socket
 import tkinter as tk
 from tkinter import *
+from text_to_image import getCharsOfName
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-# Create a socket object
-# s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-# # Connect to the server
-# host = '10.0.65.5'
-# port = 12345
-# s.connect((host, port))
+# Connect to the server
+host = '10.0.65.5'
+port = 12345
+s.connect((host, port))
 
 print('Connected to the server')
 
-def get_name():
-    name = name_entry.get()
-    name_label.config(text=f"Hello, {name}!")
-    dare_label.config(text="Dare 1: Sing a song in public.")
-    dare_number = 1
+def main():
+    root = Tk()
+    root.title("21 Dares")
+    canvas = Canvas(width=800,height=250)
+    root.geometry("800x600")
+    para="Basically, a online multiplayer game where players will take turns saying numbers 1,2 or\n 	 3 and it will add up to the main thing, the person whose number reaches 21 has to do a dare.\n Dare will ask that person to turn on the webcam and the other players will ask that person to \ndo a dare. In 3 mins that person has to do the dare. "
+    label_head = tk.Label(root, text="Welcome To 21 Dares",font=('Arial,',40),foreground='gold3')
+    label_head.pack()
+    canvas.create_rectangle(140,70,310,240,outline ="black",fill ="white",width = 2)
+    canvas.create_rectangle(330,70,500,240,outline ="black",fill ="white",width = 2)
+    canvas.create_rectangle(520,70,690,240,outline ="black",fill ="white",width = 2)
+    canvas.pack()
+    def start_game():
+        # root.destroy()
+        root2 = Tk()
+        root2.title("21 Dares")
+        root2.geometry("1500x800")
+        w= root2.winfo_screenwidth()               
+        h= root2.winfo_screenheight()  
+        canvs2 = tk.Canvas(root2, height=900, width=1500)
+        count_bx = canvs2.create_rectangle(600,50,850,300,fill="DarkSeaGreen1")
+        ply1 = canvs2.create_oval(600,350,850,600,fill="lavender")
+        ply2 = canvs2.create_oval(900,350,1150,600,fill="lavender")
+        ply2 = canvs2.create_oval(300,350,550,600,fill="lavender")
+        lb_count = canvs2.create_text(720,180,text="0",font=('Calibri',90))
+        bt_1=tk.Button(root2,text="1",font=('Calibri',25),foreground='black',background="light goldenrod yellow")
+        bt_1.place(x=420, y=700)
+        bt_2=tk.Button(root2,text="2",font=('Calibri',25),foreground='black',background="light goldenrod yellow")
+        bt_2.place(x=720, y=700)
+        bt_3=tk.Button(root2,text="3",font=('Calibri',25),foreground='black',background="light goldenrod yellow")
+        bt_3.place(x=1020, y=700)
+
+        canvs2.pack()
+        root2.mainloop()
+
+
+    label_desp = tk.Label(root,text=para,font=('Arial',20),foreground='dark olive green')
+    label_desp.pack(padx=5,pady=120)
+    start_button=tk.Button(root,text="Start the game",font=('Calibri',35),foreground='sandy brown',command = start_game)
+    start_button.pack(padx=5,pady=20)
+
+
+    root.mainloop()
 
 
 def get_name():
-    name = name_entry.get()
-    name_label.config(text=f"Hello, {name}!")
-    dare_label.config(text="Dare 1: Sing a song in public.")
-    dare_number = 1
+    root1 = tk.Tk()
+    root1.title("Enter Dare")
+    name_label = tk.Label(root1, text="What is your name?")
+    name_label.pack()
 
-def next_dare():
-    global dare_number
-    dare_number += 1
-    dare_label.config(text=f"Dare {dare_number}: Eat a spoonful of hot sauce.")
+    name_entry = tk.Entry(root1)
+    name_entry.pack()
 
-root = tk.Tk()
-root.title("21 Dares")
+    get_name_button = tk.Button(root1, text="Submit", command=main)
+    get_name_button.pack()
 
-name_label = tk.Label(root, text="What is your name?")
-name_label.pack()
+    root1.mainloop()
 
-name_entry = tk.Entry(root)
-name_entry.pack()
+    return name_entry.get()
 
-get_name_button = tk.Button(root, text="Submit", command=get_name)
-get_name_button.pack()
 
-dare_label = tk.Label(root, text="")
-dare_label.pack()
+name = get_name()
+print(name)
 
-next_dare_button = tk.Button(root, text="Next Dare", command=next_dare)
-next_dare_button.pack()
-
-root.mainloop()
 
 # Close the socket
 S.close()

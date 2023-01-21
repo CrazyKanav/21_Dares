@@ -1,23 +1,16 @@
-import tkinter as tk
-from tkinter import *
-root2 = Tk()
-root2.title("21 Dares")
-root2.geometry("1500x800")
-w= root2.winfo_screenwidth()               
-h= root2.winfo_screenheight()  
-canvs2 = tk.Canvas(root2, height=900, width=1500)
-count_bx = canvs2.create_rectangle(600,50,850,300,fill="DarkSeaGreen1")
-ply1 = canvs2.create_oval(600,350,850,600,fill="lavender")
-ply2 = canvs2.create_oval(900,350,1150,600,fill="lavender")
-ply2 = canvs2.create_oval(300,350,550,600,fill="lavender")
-lb_count = canvs2.create_text(720,180,text="0",font=('Calibri',90))
-bt_1=tk.Button(root2,text="1",font=('Calibri',25),foreground='black',background="light goldenrod yellow")
-bt_1.place(x=420, y=700)
-bt_2=tk.Button(root2,text="2",font=('Calibri',25),foreground='black',background="light goldenrod yellow")
-bt_2.place(x=720, y=700)
-bt_3=tk.Button(root2,text="3",font=('Calibri',25),foreground='black',background="light goldenrod yellow")
-bt_3.place(x=1020, y=700)
+import socket
+from _thread import *
 
+# Create a socket object
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-canvs2.pack()
-root2.mainloop()
+# Bind the socket to a specific address and port
+host = '10.0.65.5'
+port = 12345
+s.bind((host, port))
+s.listen(1)
+
+client, address = s.accept()
+print(f'Connection from {address} has been established.')
+
+message = client.recv(1024).decode("utf-8")
