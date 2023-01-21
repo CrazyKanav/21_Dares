@@ -13,7 +13,7 @@ print("Waiting for people to join")
 
 # Bind the socket to a specific address and port
 host = '10.0.65.5'
-port = 12345
+port = 12346
 s.bind((host, port))
 IPS = 1 # max num of people able to join
 s.listen(IPS)
@@ -43,6 +43,7 @@ label1 = tk.Label(root, text=name,font=('Arial',40)).place(x=380,y=420)
 
 # Create the second label
 label2 = tk.Label(root, text=opp,font=('Arial',40)).place(x=1040,y=420)
+
 def start_game():
     root.destroy()
     root2 = Tk()
@@ -56,15 +57,32 @@ def start_game():
     ply1_lb = canvs2.create_text(725,475,text='1st',font=('Calibri',90))
     ply2 = canvs2.create_oval(900,350,1150,600,fill="lavender")
     ply2_lb = canvs2.create_text(1025,475,text="2nd",font=('Calibri',90))    
-    ply3 = canvs2.create_oval(300,350,550,600,fill="lavender")
-    ply3_lb = canvs2.create_text(425,475,text="3rd",font=('Calibri',90))
-    lb_count = canvs2.create_text(720,180,text="0",font=('Calibri',90))
-    bt_1=tk.Button(root2,text="1",font=('Calibri',25),foreground='black',background="light goldenrod yellow")
-    bt_1.place(x=420, y=700)
-    bt_2=tk.Button(root2,text="2",font=('Calibri',25),foreground='black',background="light goldenrod yellow")
-    bt_2.place(x=720, y=700)
-    bt_3=tk.Button(root2,text="3",font=('Calibri',25),foreground='black',background="light goldenrod yellow")
-    bt_3.place(x=1020, y=700)
+    while count < 21:
+        label = tk.Label(root2, text=f"Counter: {count}", bg='gray',font=('Arial', 40))
+        label.pack()
+
+        done = False
+
+        def add(i):
+            if done == True:
+                done = False
+            else:
+                global count
+                # print(i)
+                count+=i
+                x_count = str(count)
+                # Send info to main about how much i added
+                client.sendall(str.encode(x_count))
+                done = True
+                label.config(text=f"Counter: {str(count)}")
+
+
+        bt_1=tk.Button(root2,text="1",font=('Calibri',25),foreground='black',background="light goldenrod yellow",command=lambda: add(1))
+        bt_1.place(x=420, y=700)
+        bt_2=tk.Button(root2,text="2",font=('Calibri',25),foreground='black',background="light goldenrod yellow",command=lambda: add(2))
+        bt_2.place(x=720, y=700)
+        bt_3=tk.Button(root2,text="3",font=('Calibri',25),foreground='black',background="light goldenrod yellow",command=lambda: add(3))
+        bt_3.place(x=1020, y=700)
 
     canvs2.pack()
     root2.mainloop()
@@ -73,6 +91,5 @@ def start_game():
 label_desp = tk.Label(root,text=para,font=('Arial',20),foreground='green')
 label_desp.pack(padx=5,pady=120)
 start_button=tk.Button(root,text="Start the game",font=('Calibri',35),foreground='brown',command = start_game).place(x=600,y=600)
-
 
 root.mainloop()
