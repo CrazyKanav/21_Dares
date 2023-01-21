@@ -44,7 +44,6 @@ start_button=tk.Button(root,text="Start the game",font=('Calibri',35),foreground
 start_button.pack(padx=5,pady=20)
 
 
-start_game()
 root.mainloop()
 
 # Socket 
