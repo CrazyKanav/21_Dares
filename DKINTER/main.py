@@ -10,15 +10,31 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Bind the socket to a specific address and port
 host = '10.0.65.5'
-port = 12345
+port = 12348
 s.bind((host, port))
-s.listen(1)
+IPS = 1 # max num of people able to join
+s.listen(IPS)
 
-client, address = s.accept()
-print(f'Connection from {address} has been established.')
+names = []
 
-message = client.recv(1024).decode("utf-8")
+if IPS == 1:
+    client, address = s.accept()
+    print(f'Connection from {address} has been established.')
+    msg = client.recv(1024).decode("utf-8")
+    names.append(msg)
+else:
+    for i in range(1, IPS):
+        client, address = s.accept()
+        print(f'Connection from {address} has been established.')
+    message0 = client.recv(1024).decode("utf-8")    
+    message1 = client.recv(1024).decode("utf-8")
+    names.append(message0)
+    names.append(message1)
 
+print(names)
+
+# give signal to start
+client.send(str.encode("Start"))
 
 root = Tk()
 root.title("21 Dares")
