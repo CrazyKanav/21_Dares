@@ -23,7 +23,7 @@ display_surface = pygame.display.set_mode((X, Y))
 pygame.display.set_caption('Show Text')
  
 font = pygame.font.Font('freesansbold.ttf', 32)
-text = font.render('GeeksForGeeks', True, green, blue)
+text = font.render('Welcome to 21 Dares', True, green, blue)
 textRect = text.get_rect()
 textRect.center = (X // 2, Y // 2)
  
