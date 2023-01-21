@@ -4,18 +4,16 @@ import socket
 from _thread import *
 root = Tk()
 root.title("21 Dares")
-canvas = Canvas(width=800,height=250)
+canvas = Canvas(width=800,height=350)
 root.geometry("800x600")
 para="Basically, a online multiplayer game where players will take turns saying numbers 1,2 or\n 	 3 and it will add up to the main thing, the person whose number reaches 21 has to do a dare.\n Dare will ask that person to turn on the webcam and the other players will ask that person to \ndo a dare. In 3 mins that person has to do the dare. "
 label_head = tk.Label(root, text="Welcome To 21 Dares",font=('Arial,',40),foreground='gold3')
 label_head.pack()
 # Create the first label
-label1 = tk.Label(root, text="name")
-label1.pack(side='left')
+label1 = tk.Label(root, text="name",font=('Arial',40)).place(x=380,y=420)
 
 # Create the second label
-label2 = tk.Label(root, text="opp")
-label2.pack(side='right')
+label2 = tk.Label(root, text="opp",font=('Arial',40)).place(x=1040,y=420)
 def start_game():
     root.destroy()
     root2 = Tk()
@@ -45,8 +43,7 @@ def start_game():
 
 label_desp = tk.Label(root,text=para,font=('Arial',20),foreground='green')
 label_desp.pack(padx=5,pady=120)
-start_button=tk.Button(root,text="Start the game",font=('Calibri',35),foreground='brown',command = start_game)
-start_button.pack(padx=5,pady=20)
+start_button=tk.Button(root,text="Start the game",font=('Calibri',35),foreground='brown',command = start_game).place(x=600,y=600)
 
 
 root.mainloop()
