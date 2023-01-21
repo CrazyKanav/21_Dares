@@ -1,38 +1,35 @@
 import pygame
-from pygame.locals import (
-    K_UP,
-    K_DOWN,
-    K_LEFT,
-    K_RIGHT,
-    K_ESCAPE,
-    KEYDOWN,
-    QUIT,
-
-)
-
+ 
 pygame.init()
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 800
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+ 
+white = (255, 255, 255)
+green = (0, 255, 0)
+blue = (0, 0, 128)
 
-running = True
-while running:
+
+display_surface = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+
+X, Y = display_surface.get_size()
+
+Y -= 700
+ 
+# set the pygame window name
+pygame.display.set_caption('Show Text')
+ 
+font = pygame.font.Font('freesansbold.ttf', 52)
+text = font.render('Welcome to 21 Dares', True, blue)
+textRect = text.get_rect()
+textRect.center = (X // 2, Y // 2)
+ 
+# infinite loop
+while True:
+ 
+    display_surface.fill(white)
+ 
+    display_surface.blit(text, textRect)
     for event in pygame.event.get():
-        if event.type == KEYDOWN:
-            if event.key == K_ESCAPE:
-                running = False
-        elif event.type == QUIT:
-            running = False
-
-screen.fill((255, 255, 255))
-surf = pygame.Surface((50, 50))
-surf.fill((0, 0, 0))
-rect = surf.get_rect()
-
-surf_center = (
-    (SCREEN_WIDTH-surf.get_width())/2,
-    (SCREEN_HEIGHT-surf.get_height())/2
-)
-
-screen.blit(surf, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
-pygame.display.flip()
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            quit()
+ 
+        pygame.display.update()
