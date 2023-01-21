@@ -1,5 +1,6 @@
 from PIL import Image, ImageDraw, ImageFont
 def getCharsOfName(name):
+  name = name.split(' ')
   initials= ""
   for c in name:
     initials += c[0]
@@ -10,5 +11,4 @@ def getCharsOfName(name):
   img.save('pil_text.png')
 
 name = input("Enter your name (in two words): ")
-name = name.split(' ')
 getCharsOfName(name)
