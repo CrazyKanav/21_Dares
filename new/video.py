@@ -1,10 +1,10 @@
 import tkinter as tk
+from tkinter import *
 from PIL import Image, ImageTk
 import cv2
 
 root = tk.Tk()
 root.title("Dare Challenge")
-
 # Create a label for the video
 video_label = tk.Label(root)
 video_label.pack()
@@ -19,6 +19,8 @@ stop_button.pack()
 
 # Start the video capture
 cap = cv2.VideoCapture(0)
+cap.set(3, 700)
+cap.set(4, 420)
 fourcc = cv2.VideoWriter_fourcc(*'XVID')
 out = cv2.VideoWriter('output.avi',fourcc, 20.0, (640,480))
 
