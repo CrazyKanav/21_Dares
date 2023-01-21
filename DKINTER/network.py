@@ -1,23 +1,16 @@
 import socket
+from _thread import *
 
+# Create a socket object
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-class Player:
-    def __init__(self):
-        self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.server = "10.0.65.5"
-        self.port = 5555
-        self.addr = (self.server, self.port)
+# Bind the socket to a specific address and port
+host = '10.0.65.5'
+port = 12345
+s.bind((host, port))
+s.listen(1)
 
-    def connect(self):
-        try:
-            self.client.connect(self.addr)
-            return self.client.recv(2048).decode()
-        except:
-            pass
+client, address = s.accept()
+print(f'Connection from {address} has been established.')
 
-    def send(self, data):
-        try:
-            self.client.send(str.encode(data))
-            return self.client.recv(2048).decode()
-        except socket.error as e:
-            print(e)
+message = client.recv(1024).decode("utf-8")

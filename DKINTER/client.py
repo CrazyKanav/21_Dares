@@ -5,7 +5,7 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Connect to the server
 host = '10.0.65.5'
-port = 5555
+port = 5556
 s.connect((host, port))
 
 print('Connected to the server')
@@ -17,8 +17,6 @@ print(name)
 s.send(str.encode(name))
 
 flag = s.recv(1042).decode()
-
-print("Waiting for every body to come")
 
 if flag:
     root = Tk()

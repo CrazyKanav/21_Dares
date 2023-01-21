@@ -58,7 +58,7 @@ def start_game():
     canvs2 = tk.Canvas(root2, height=900, width=1500)
     count_bx = canvs2.create_rectangle(600,50,850,300,fill="DarkSeaGreen1")
     ply1 = canvs2.create_oval(600,350,850,600,fill="lavender")
-    ply1_lb = canvs2.create_text(725,475,text=0,font=('Calibri',90))
+    ply1_lb = canvs2.create_text(725,475,text='1st',font=('Calibri',90))
     ply2 = canvs2.create_oval(900,350,1150,600,fill="lavender")
     ply2_lb = canvs2.create_text(1025,475,text="2nd",font=('Calibri',90))    
     ply3 = canvs2.create_oval(300,350,550,600,fill="lavender")
