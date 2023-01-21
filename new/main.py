@@ -3,39 +3,36 @@ from tkinter import *
 import socket
 from _thread import *
 
-print("Waiting for people to join")
 
 # Create a socket object
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
+name = input("Enter your name: ")
+
+print("Waiting for people to join")
+
 # Bind the socket to a specific address and port
 host = '10.0.65.5'
-port = 5556
+port = 55531
 s.bind((host, port))
 IPS = 1 # max num of people able to join
 s.listen(IPS)
 
-names = []
+opp = ''
 
 if IPS == 1:
     client, address = s.accept()
     print(f'Connection from {address} has been established.')
     msg = client.recv(1024).decode("utf-8")
-    names.append(msg)
-else:
-    for i in range(1, IPS):
-        client, address = s.accept()
-        print(f'Connection from {address} has been established.')
-    message0 = client.recv(1024).decode("utf-8")    
-    message1 = client.recv(1024).decode("utf-8")
-    names.append(message0)
-    names.append(message1)
+    opp = msg
 
-print(names)
+print(opp)
+
+# give server name to client
+client.send(str.encode(name))
 
 # give signal to start
 client.send(str.encode("Start"))
-
 
 root = Tk()
 root.title("21 Dares")
@@ -44,10 +41,16 @@ root.geometry("800x600")
 para="Basically, a online multiplayer game where players will take turns saying numbers 1,2 or\n 	 3 and it will add up to the main thing, the person whose number reaches 21 has to do a dare.\n Dare will ask that person to turn on the webcam and the other players will ask that person to \ndo a dare. In 3 mins that person has to do the dare. "
 label_head = tk.Label(root, text="Welcome To 21 Dares",font=('Arial,',40),foreground='gold3')
 label_head.pack()
-canvas.create_rectangle(140,70,310,240,outline ="black",fill ="white",width = 2)
-canvas.create_rectangle(330,70,500,240,outline ="black",fill ="white",width = 2)
-canvas.create_rectangle(520,70,690,240,outline ="black",fill ="white",width = 2)
-canvas.pack()
+# Create the first label
+label1 = tk.Label(root, text=name)
+label1.pack(side='left')
+
+# Create the second label
+label2 = tk.Label(root, text=opp)
+label2.pack(side='right')
+
+    # canvas.create_rectangle(140,70,310,240,outline ="black",fill ="white",width = 2)
+    # canvas.create_rectangle(330,70,500,240,outline ="black",fill ="white",width = 2)
 def start_game():
     root.destroy()
     root2 = Tk()
