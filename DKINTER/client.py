@@ -5,7 +5,7 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Connect to the server
 host = '10.0.65.5'
-port = 12345
+port = 12346
 s.connect((host, port))
 
 print('Connected to the server')
@@ -59,4 +59,4 @@ start_button.pack(padx=5,pady=20)
 root.mainloop()
 
 # Close the socket
-S.close()
+s.close()
