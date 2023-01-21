@@ -1,27 +1,36 @@
 import socket
 from _thread import *
 import sys
-import os
 
-server = '10.0.65.12'
+server = "10.0.65.5"
 port = 5555
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
 try:
-    s.bind((server, port)) # Assigns ip address to socket
+    s.bind((server, port))
 except socket.error as e:
     str(e)
 
-s.listen(3)
+s.listen(2)
 print("Waiting for a connection, Server Started")
 
+def ask():
+    name = input("What is the player's name: ")
+    print(f"Ok, {name}. \n WELCOME TO 21 DARES")
+    return name
+
+
 def threaded_client(conn):
-    conn.send("Connected") # Converts string to binary
+    # Ask For name
+    conn.send(str.encode("Connected"))
     reply = ""
     while True:
         try:
-            data = conn.recv(2048*2)
+            data = conn.recv(2048)
             reply = data.decode("utf-8")
+
+            print(reply)
 
             if not data:
                 print("Disconnected")
@@ -30,16 +39,18 @@ def threaded_client(conn):
                 print("Received: ", reply)
                 print("Sending : ", reply)
 
-                conn.sendall(str.encode(reply))
-
+            conn.sendall(str.encode(reply))
         except:
-            pass
+            print("Begining Game")
 
     print("Lost connection")
     conn.close()
 
+
 while True:
     conn, addr = s.accept()
     print("Connected to:", addr)
+
+    name = conn.send(str.encode(ask()))
 
     start_new_thread(threaded_client, (conn,))

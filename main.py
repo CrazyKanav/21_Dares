@@ -16,7 +16,6 @@ heading_X = X
 pygame.display.set_caption('Welcome Page')
 
 #button
-
 font = pygame.font.Font('freesansbold.ttf', 52)
 text = font.render('Welcome to 21 Dares', True, brown)
 textRect = text.get_rect()
