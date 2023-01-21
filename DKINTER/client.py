@@ -18,8 +18,6 @@ s.send(str.encode(name))
 
 flag = s.recv(1042).decode()
 
-print("Waiting for every body to come")
-
 if flag:
     root = Tk()
     root.title("21 Dares")
