@@ -9,12 +9,20 @@ display_surface = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 
 X, Y = display_surface.get_size()
 
+color_dark = (100,100,100)
+pygame.draw.rect(display_surface, color_dark, [590, 315, 80 , 30])
+smallfont = pygame.font.SysFont('Corbel',16) 
+text = smallfont.render('LOAD' , True , (50,50,50)) 
+display_surface.blit(text , (600 , 320))
+
 heading_Y = Y - 700
 heading_X = X
  
 # set the pygame window name
 pygame.display.set_caption('Welcome Page')
- 
+
+#button
+
 font = pygame.font.Font('freesansbold.ttf', 52)
 text = font.render('Welcome to 21 Dares', True, brown)
 textRect = text.get_rect()
@@ -54,5 +62,9 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             quit()
- 
-        pygame.display.update()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if X / 2 -100<= mouse[0] <= X / 2 + 140 and Y / 2 <= mouse[1] <= Y / 2 :
+                pygame.quit()
+    
+
+    pygame.display.update()
