@@ -1,10 +1,9 @@
 import pygame
- 
 pygame.init()
  
 white = (255, 255, 255)
 green = (0, 255, 0)
-brown = (181, 101, 29)
+brown = (191, 101, 29)
 
 
 
