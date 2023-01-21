@@ -5,7 +5,7 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Connect to the server
 host = '10.0.65.5'
-port = 12348
+port = 5556
 s.connect((host, port))
 
 print('Connected to the server')
@@ -41,9 +41,13 @@ if flag:
         h= root2.winfo_screenheight()  
         canvs2 = tk.Canvas(root2, height=900, width=1500)
         count_bx = canvs2.create_rectangle(600,50,850,300,fill="DarkSeaGreen1")
-        ply1 = canvs2.create_oval(600,350,850,600,fill="lavender")
-        ply2 = canvs2.create_oval(900,350,1150,600,fill="lavender")
-        ply2 = canvs2.create_oval(300,350,550,600,fill="lavender")
+        ply1 = canvs2.create_oval(600,350,850,600,fill="lavender blush1")
+        ply1_lb = canvs2.create_text(725,475,text="0",font=('Calibri',90))
+        ply2 = canvs2.create_oval(900,350,1150,600,fill="lavender blush1")
+        ply2_lb = canvs2.create_text(1025,475,text="0",font=('Calibri',90))    
+        ply3 = canvs2.create_oval(300,350,550,600,fill="lavender blush1")
+        ply3_lb = canvs2.create_text(425,475,text="0",font=('Calibri',90))
+    
         lb_count = canvs2.create_text(720,180,text="0",font=('Calibri',90))
         bt_1=tk.Button(root2,text="1",font=('Calibri',25),foreground='black',background="light goldenrod yellow")
         bt_1.place(x=420, y=700)
