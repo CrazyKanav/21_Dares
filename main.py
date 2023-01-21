@@ -9,12 +9,6 @@ display_surface = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 
 X, Y = display_surface.get_size()
 
-color_dark = (100,100,100)
-pygame.draw.rect(display_surface, color_dark, [590, 315, 80 , 30])
-smallfont = pygame.font.SysFont('Corbel',16) 
-text = smallfont.render('LOAD' , True , (50,50,50)) 
-display_surface.blit(text , (600 , 320))
-
 heading_Y = Y - 700
 heading_X = X
  
@@ -58,13 +52,6 @@ while True:
     display_surface.blit(text_d2,text_d2Rect)
     display_surface.blit(text_d3,text_d3Rect)
     display_surface.blit(text_d4,text_d4Rect)
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            quit()
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if X / 2 -100<= mouse[0] <= X / 2 + 140 and Y / 2 <= mouse[1] <= Y / 2 :
-                pygame.quit()
     
 
     pygame.display.update()
