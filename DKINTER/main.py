@@ -26,6 +26,7 @@ else:
     for i in range(1, IPS):
         client, address = s.accept()
         print(f'Connection from {address} has been established.')
+    client.send(str.encode("Start"))
     message0 = client.recv(1024).decode("utf-8")    
     message1 = client.recv(1024).decode("utf-8")
     names.append(message0)
