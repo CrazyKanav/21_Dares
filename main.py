@@ -10,13 +10,28 @@ from pygame.locals import (
 
 )
 
+# Colors
+white = (255, 255, 255)
+green = (0, 255, 0)
+blue = (0, 0, 128)
+
 pygame.init()
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 800
+SCREEN_WIDTH = 400
+SCREEN_HEIGHT = 400
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+
+pygame.display.set_caption('Show Text')
+
+font = pygame.font.Font('freesansbold.ttf', 32)
+text = font.render('Welcome to 21 Dares', True, green, blue)
+textRect = text.get_rect()
+textRect.center = (X // 2, Y // 2)
+
 
 running = True
 while running:
+    screen.fill(white)
+    screen.blit(text, textRect)
     for event in pygame.event.get():
         if event.type == KEYDOWN:
             if event.key == K_ESCAPE:
@@ -24,15 +39,4 @@ while running:
         elif event.type == QUIT:
             running = False
 
-screen.fill((255, 255, 255))
-surf = pygame.Surface((50, 50))
-surf.fill((0, 0, 0))
-rect = surf.get_rect()
-
-surf_center = (
-    (SCREEN_WIDTH-surf.get_width())/2,
-    (SCREEN_HEIGHT-surf.get_height())/2
-)
-
-screen.blit(surf, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 pygame.display.flip()
