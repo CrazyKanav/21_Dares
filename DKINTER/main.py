@@ -20,6 +20,7 @@ print(f'Connection from {address} has been established.')
 message = client.recv(1024).decode("utf-8")
 
 
+
 root = Tk()
 root.title("21 Dares")
 canvas = Canvas(width=800,height=250)
