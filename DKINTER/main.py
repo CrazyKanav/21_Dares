@@ -3,6 +3,19 @@ from tkinter import *
 import socket
 from _thread import *
 
+# Create a socket object
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+# Bind the socket to a specific address and port
+host = '10.0.65.5'
+port = 12345
+s.bind((host, port))
+s.listen(1)
+
+client, address = s.accept()
+print(f'Connection from {address} has been established.')
+
+
 root = Tk()
 root.title("21 Dares")
 canvas = Canvas(width=800,height=250)
@@ -44,19 +57,4 @@ start_button=tk.Button(root,text="Start the game",font=('Calibri',35),foreground
 start_button.pack(padx=5,pady=20)
 
 
-start_game()
 root.mainloop()
-
-# Socket 
-
-# Create a socket object
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-# Bind the socket to a specific address and port
-host = '10.0.65.5'
-port = 12345
-s.bind((host, port))
-s.listen(1)
-
-client, address = server.accept()
-print(f'Connection from {address} has been established.')
