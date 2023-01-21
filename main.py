@@ -1,29 +1,23 @@
 import pygame
  
-# activate the pygame library
-# initiate pygame and give permission
-# to use pygame's functionality.
 pygame.init()
  
-# define the RGB value for white,
-#  green, blue colour .
 white = (255, 255, 255)
 green = (0, 255, 0)
 blue = (0, 0, 128)
- 
-# assigning values to X and Y variable
-X = 400
-Y = 400
- 
-# create the display surface object
-# of specific dimension..e(X, Y).
-display_surface = pygame.display.set_mode((X, Y))
+
+
+display_surface = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+
+X, Y = display_surface.get_size()
+
+Y -= 700
  
 # set the pygame window name
 pygame.display.set_caption('Show Text')
  
-font = pygame.font.Font('freesansbold.ttf', 32)
-text = font.render('Welcome to 21 Dares', True, green, blue)
+font = pygame.font.Font('freesansbold.ttf', 52)
+text = font.render('Welcome to 21 Dares', True, blue)
 textRect = text.get_rect()
 textRect.center = (X // 2, Y // 2)
  
