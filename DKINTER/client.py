@@ -59,4 +59,4 @@ start_button.pack(padx=5,pady=20)
 root.mainloop()
 
 # Close the socket
-s.close()
+S.close()
