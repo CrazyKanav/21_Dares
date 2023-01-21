@@ -5,12 +5,13 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Connect to the server
 host = '10.0.65.5'
-port = 5555
+port = 12345
 s.connect((host, port))
 
 print('Connected to the server')
 
-name = input("Enter name")
+# Send name 
+name = input("Enter Name: ")
 s.sendall(name.encode())
 
 # Play the game
