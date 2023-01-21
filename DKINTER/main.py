@@ -1,16 +1,5 @@
 import tkinter as tk
 from tkinter import *
-import socket
-
-# Create a socket object
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-# Connect to the server
-host = '10.0.65.5'
-port = 12345
-s.connect((host, port))
-
-print('Connected to the server')
 
 root = Tk()
 root.title("21 Dares")
@@ -48,8 +37,9 @@ def start_game():
 
 
 label_desp = tk.Label(root,text=para,font=('Arial',20),foreground='olive')
-label_desp = tk.Label(root,text=para,font=('Arial',20),foreground='dark olive green')
 label_desp.pack(padx=5,pady=120)
-start_button=tk.Button(root,text="Start the game",font=('Calibri',35),foreground='sandy brown')
+start_button=tk.Button(root,text="Start the game",font=('Calibri',35),foreground='brown',command = start_game)
 start_button.pack(padx=5,pady=20)
+
+
 root.mainloop()
