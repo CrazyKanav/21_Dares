@@ -5,8 +5,6 @@ white = (255, 255, 255)
 green = (0, 255, 0)
 brown = (191, 101, 29)
 
-
-
 display_surface = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 
 X, Y = display_surface.get_size()
