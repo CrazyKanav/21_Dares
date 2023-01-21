@@ -15,14 +15,22 @@ except socket.error as e:
 s.listen(2)
 print("Waiting for a connection, Server Started")
 
+def ask():
+    name = input("What is the player's name: ")
+    print(f"Ok, {name}. \n WELCOME TO 21 DARES")
+    return name
+
 
 def threaded_client(conn):
+    # Ask For name
     conn.send(str.encode("Connected"))
     reply = ""
     while True:
         try:
             data = conn.recv(2048)
             reply = data.decode("utf-8")
+
+            print(reply)
 
             if not data:
                 print("Disconnected")
@@ -33,7 +41,7 @@ def threaded_client(conn):
 
             conn.sendall(str.encode(reply))
         except:
-            break
+            print("Begining Game")
 
     print("Lost connection")
     conn.close()
@@ -42,5 +50,7 @@ def threaded_client(conn):
 while True:
     conn, addr = s.accept()
     print("Connected to:", addr)
+
+    name = conn.send(str.encode(ask()))
 
     start_new_thread(threaded_client, (conn,))
