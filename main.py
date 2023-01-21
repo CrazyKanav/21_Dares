@@ -1,42 +1,41 @@
 import pygame
-from pygame.locals import (
-    K_UP,
-    K_DOWN,
-    K_LEFT,
-    K_RIGHT,
-    K_ESCAPE,
-    KEYDOWN,
-    QUIT,
-
-)
-
-# Colors
+ 
+# activate the pygame library
+# initiate pygame and give permission
+# to use pygame's functionality.
+pygame.init()
+ 
+# define the RGB value for white,
+#  green, blue colour .
 white = (255, 255, 255)
 green = (0, 255, 0)
 blue = (0, 0, 128)
-
-pygame.init()
-SCREEN_WIDTH = 400
-SCREEN_HEIGHT = 400
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-
+ 
+# assigning values to X and Y variable
+X = 400
+Y = 400
+ 
+# create the display surface object
+# of specific dimension..e(X, Y).
+display_surface = pygame.display.set_mode((X, Y))
+ 
+# set the pygame window name
 pygame.display.set_caption('Show Text')
-
+ 
 font = pygame.font.Font('freesansbold.ttf', 32)
-text = font.render('Welcome to 21 Dares', True, green, blue)
+text = font.render('GeeksForGeeks', True, green, blue)
 textRect = text.get_rect()
 textRect.center = (X // 2, Y // 2)
-
-
-running = True
-while running:
-    screen.fill(white)
-    screen.blit(text, textRect)
+ 
+# infinite loop
+while True:
+ 
+    display_surface.fill(white)
+ 
+    display_surface.blit(text, textRect)
     for event in pygame.event.get():
-        if event.type == KEYDOWN:
-            if event.key == K_ESCAPE:
-                running = False
-        elif event.type == QUIT:
-            running = False
-
-pygame.display.flip()
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            quit()
+ 
+        pygame.display.update()
