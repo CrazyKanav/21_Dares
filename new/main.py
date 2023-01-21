@@ -3,7 +3,7 @@ from tkinter import *
 import socket
 from _thread import *
 
-
+count = 0
 # Create a socket object
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -13,7 +13,7 @@ print("Waiting for people to join")
 
 # Bind the socket to a specific address and port
 host = '10.0.65.5'
-port = 55531
+port = 12345
 s.bind((host, port))
 IPS = 1 # max num of people able to join
 s.listen(IPS)
@@ -28,11 +28,8 @@ if IPS == 1:
 
 print(opp)
 
-# give server name to client
-client.send(str.encode(name))
-
 # give signal to start
-client.send(str.encode("Start"))
+client.sendall(str.encode("Start"))
 
 root = Tk()
 root.title("21 Dares")
@@ -59,19 +56,27 @@ def start_game():
     w= root2.winfo_screenwidth()               
     h= root2.winfo_screenheight()  
     canvs2 = tk.Canvas(root2, height=900, width=1500)
-    count_bx = canvs2.create_rectangle(600,50,850,300,fill="DarkSeaGreen1")
     ply1 = canvs2.create_oval(600,350,850,600,fill="lavender")
-    ply1_lb = canvs2.create_text(725,475,text='1st',font=('Calibri',90))
+    ply1_lb = canvs2.create_text(725,475,text='2nd',font=('Calibri',90))
     ply2 = canvs2.create_oval(900,350,1150,600,fill="lavender")
-    ply2_lb = canvs2.create_text(1025,475,text="2nd",font=('Calibri',90))    
+    ply2_lb = canvs2.create_text(1025,475,text="3rd",font=('Calibri',90))    
     ply3 = canvs2.create_oval(300,350,550,600,fill="lavender")
-    ply3_lb = canvs2.create_text(425,475,text="3rd",font=('Calibri',90))
-    lb_count = canvs2.create_text(720,180,text="0",font=('Calibri',90))
-    bt_1=tk.Button(root2,text="1",font=('Calibri',25),foreground='black',background="light goldenrod yellow")
+    ply3_lb = canvs2.create_text(425,475,text="1st",font=('Calibri',90))
+    label = tk.Label(root2, text=f"Counter: {count}", bg='gray',font=('Arial', 40))
+    label.pack()
+
+    def add(i):
+        global count
+        # print(i)
+        count+=i
+        label.config(text=f"Counter: {str(count)}")
+
+
+    bt_1=tk.Button(root2,text="1",font=('Calibri',25),foreground='black',background="light goldenrod yellow",command=lambda: add(1))
     bt_1.place(x=420, y=700)
-    bt_2=tk.Button(root2,text="2",font=('Calibri',25),foreground='black',background="light goldenrod yellow")
+    bt_2=tk.Button(root2,text="2",font=('Calibri',25),foreground='black',background="light goldenrod yellow",command=lambda: add(2))
     bt_2.place(x=720, y=700)
-    bt_3=tk.Button(root2,text="3",font=('Calibri',25),foreground='black',background="light goldenrod yellow")
+    bt_3=tk.Button(root2,text="3",font=('Calibri',25),foreground='black',background="light goldenrod yellow",command=lambda: add(3))
     bt_3.place(x=1020, y=700)
 
     canvs2.pack()
