@@ -4,7 +4,7 @@ from tkinter import *
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Connect to the server
-host = '10.0.65.5'
+host = '10.0.65.12'
 port = 5556
 s.connect((host, port))
 
