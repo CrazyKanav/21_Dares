@@ -16,7 +16,7 @@ print("Waiting for people to join")
 host = '10.0.65.5'
 port = 5556
 s.bind((host, port))
-IPS = 2 # max num of people able to join
+IPS = 1 # max num of people able to join
 s.listen(IPS)
 
 opp = ''
@@ -30,9 +30,7 @@ if IPS == 1:
 print(opp)
 
 # give signal to start
-xyz=0
-s.sendall(str.encode("Start"))
-xyz+1
+client.sendall(str.encode("Start"))
 
 root = Tk()
 root.title("21 Dares")
@@ -55,7 +53,6 @@ def start_game():
     w= root2.winfo_screenwidth()               
     h= root2.winfo_screenheight()  
     canvs2 = tk.Canvas(root2, height=900, width=1500)
-    turn_lb=tk.Label(root2,text="dash was here",font=('Arial', 40)).place(x=600,y=50)
     count_bx = canvs2.create_rectangle(600,50,850,300,fill="DarkSeaGreen1")
     ply1 = canvs2.create_oval(600,350,850,600,fill="lavender")
     ply1_lb = canvs2.create_text(725,475,text='1st',font=('Calibri',90))
@@ -86,16 +83,8 @@ def start_game():
             label.config(text=f"Counter: {str(count)}")
             print("INCREMENT HELLO")
             increment += 1
-            print(increment)
-
             disable(b1, b2, b3)
             
-
-            print(f"SOCKET SENDING INCREMENT HERE {increment}")
-            x = str(increment)
-            y = str(count)
-            client.sendall(str.encode(x)) # Increment
-            client.sendall(str.encode(y))
         
 
         if increment % 2 == 0:
@@ -106,7 +95,6 @@ def start_game():
             bt_2.place(x=720, y=700)
             bt_3=tk.Button(root2,text="3",font=('Calibri',25),foreground='black',background="light goldenrod yellow",command=lambda: add(3, bt_1, bt_2, bt_3))
             bt_3.place(x=1020, y=700)
-
         else:
             print("Odd, Clients Turn")
         
@@ -120,12 +108,6 @@ def start_game():
 
             disable(bt_1, bt_2, bt_3)
 
-            x = str(increment)
-            y = str(count)
-            client.sendall(str.encode(y))
-            client.sendall(str.encode(x))
-
-
 
         canvs2.pack()
         root2.mainloop()
@@ -134,5 +116,5 @@ def start_game():
 label_desp = tk.Label(root,text=para,font=('Arial',20),foreground='green')
 label_desp.pack(padx=5,pady=120)
 start_button=tk.Button(root,text="Start the game",font=('Calibri',35),foreground='brown',command = start_game).place(x=600,y=600)
-print(xyz)
+
 root.mainloop()

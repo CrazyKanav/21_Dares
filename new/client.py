@@ -50,14 +50,14 @@ if flag:
 
             label = tk.Label(root2, text=f"Counter: {count}", bg='gray',font=('Arial', 40))
             label.pack()
-
+            flag = True
             # give increment to client, if odd then client's turn, if even then main's turn
             while count < 21:
-                increment = s.recv(2048).decode()
-                print("Increment " + increment)
-                print("Count " + str(count))
-                incre_str = str(increment)
-                print(incre_str)
+                if flag == True:
+                    increment = s.recv(2048).decode()
+                    print("Increment " + increment)
+                else:
+                    continue
 
                 def disable(b1, b2, b3):
                     b1.config(state="disable")
@@ -74,17 +74,12 @@ if flag:
                     print("INCREMENT HELLO")
                     increment += 1
                     print(increment)
-
-                    print(f"SOCKET SENDING INCREMENT HERE {increment}")
-                    print(f"SOCKET SENDING COUNT HERE {count}")
-                    x = str(increment)
-                    y = str(count)
-                    client.sendall(str.encode(x)) # Increment
-                    client.sendall(str.encode(y))
                 
 
                 if int(increment) % 2 == 0:
                     print("Even, Main's Turn")
+                    s.recv(1024).decode()
+                    # Disable
                     bt_1=tk.Button(root2,text="1",font=('Calibri',25),foreground='black',background="light goldenrod yellow")
                     bt_1.place(x=420, y=700)
                     bt_2=tk.Button(root2,text="2",font=('Calibri',25),foreground='black',background="light goldenrod yellow")
@@ -97,8 +92,6 @@ if flag:
 
                 else:
                     print("Odd, Client Turn")
-                    increment = int(client.recv(1024).decode())
-                    count = int(client.recv(1024).decode())
                     print(f"Increment: {increment} and Count: {count}")
                     #  Enabled Buttons
                     bt_1=tk.Button(root2,text="1",font=('Calibri',25),foreground='black',background="light goldenrod yellow",command=lambda: add(1))
@@ -107,6 +100,10 @@ if flag:
                     bt_2.place(x=720, y=700)
                     bt_3=tk.Button(root2,text="3",font=('Calibri',25),foreground='black',background="light goldenrod yellow",command=lambda: add(3))
                     bt_3.place(x=1020, y=700)
+
+                    s.sendall(str.encode(x)) # Increment
+                    s.sendall(str.encode(y))
+
                 
 
                 canvs2.pack()
