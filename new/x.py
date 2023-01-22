@@ -1,26 +1,13 @@
-import tkinter as tk
+import socket
 
-def increment(num):
-    global count
-    count += num
-    update_count()
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-def update_count():
-    label.config(text="Count: "+str(count))
+host = '10.0.65.8'
+port = 12345
+s.bind((host, port))
 
-root = tk.Tk()
-count = 0
+s.listen(1)
 
-label = tk.Label(root, text="Count: 0")
-label.pack()
+client, address = s.accept()
 
-button1 = tk.Button(root, text="Increment 1", command=lambda: increment(1))
-button1.pack()
-
-button2 = tk.Button(root, text="Increment 2", command=lambda: increment(2))
-button2.pack()
-
-button3 = tk.Button(root, text="Increment 3", command=lambda: increment(3))
-button3.pack()
-
-root.mainloop()
+client.sendall(str.encode("Kanav says hi"))
