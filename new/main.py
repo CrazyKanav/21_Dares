@@ -14,7 +14,7 @@ print("Waiting for people to join")
 
 # Bind the socket to a specific address and port
 host = '10.0.65.5'
-port = 5555
+port = 5556
 s.bind((host, port))
 IPS = 1 # max num of people able to join
 s.listen(IPS)
@@ -106,7 +106,7 @@ def start_game():
 
         else:
             print("Odd, Clients Turn")
-
+        
             #  Disable Buttons
             bt_1=tk.Button(root2,text="1",font=('Calibri',25),foreground='black',background="light goldenrod yellow")
             bt_1.place(x=420, y=700)
@@ -116,6 +116,13 @@ def start_game():
             bt_3.place(x=1020, y=700)
 
             disable(bt_1, bt_2, bt_3)
+
+            x = str(increment)
+            y = str(count)
+            client.sendall(str.encode(y))
+            client.sendall(str.encode(x))
+
+
 
         canvs2.pack()
         root2.mainloop()

@@ -6,7 +6,7 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Connect to the server
 host = '10.0.65.5'
-port = 5555
+port = 5556
 s.connect((host, port))
 
 print('Connected to the server')
@@ -65,8 +65,8 @@ if flag:
                     b3.config(state="disable")
 
                 def add(i):
+                    increment = increment
                     global count
-                    global increment
                     while (count + i) < 21:
                         break
                     count += i
@@ -76,6 +76,7 @@ if flag:
                     print(increment)
 
                     print(f"SOCKET SENDING INCREMENT HERE {increment}")
+                    print(f"SOCKET SENDING COUNT HERE {count}")
                     x = str(increment)
                     y = str(count)
                     client.sendall(str.encode(x)) # Increment
@@ -96,7 +97,9 @@ if flag:
 
                 else:
                     print("Odd, Client Turn")
-
+                    increment = int(client.recv(1024).decode())
+                    count = int(client.recv(1024).decode())
+                    print(f"Increment: {increment} and Count: {count}")
                     #  Enabled Buttons
                     bt_1=tk.Button(root2,text="1",font=('Calibri',25),foreground='black',background="light goldenrod yellow",command=lambda: add(1))
                     bt_1.place(x=420, y=700)
