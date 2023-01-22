@@ -11,7 +11,7 @@ para="Basically, a online multiplayer game where players will take turns saying 
 label_head = tk.Label(root, text="Welcome To 21 Dares",font=('Arial,',40),foreground='gold3')
 label_head.pack()
 canvas.create_rectangle(140,70,310,240,outline ="black",fill ="white",width = 2)
-canvas.create_rectangle(330,70,500,240,outline ="black",fill ="white",width = 2)
+#canvas.create_rectangle(330,70,500,240,outline ="black",fill ="white",width = 2)
 canvas.create_rectangle(520,70,690,240,outline ="black",fill ="white",width = 2)
 canvas.pack()
 def start_game():
@@ -25,10 +25,10 @@ def start_game():
     canvs2 = tk.Canvas(root2, height=900, width=1500)
 
     # count_bx = canvs2.create_rectangle(600,50,850,300,fill="DarkSeaGreen1")
-    ply1 = canvs2.create_oval(600,350,850,600,fill="lavender")
-    ply1_lb = canvs2.create_text(725,475,text='2nd',font=('Calibri',90))
+    #ply1 = canvs2.create_oval(600,350,850,600,fill="lavender")
+    #ply1_lb = canvs2.create_text(725,475,text='2nd',font=('Calibri',90))
     ply2 = canvs2.create_oval(900,350,1150,600,fill="lavender")
-    ply2_lb = canvs2.create_text(1025,475,text="3rd",font=('Calibri',90))    
+    ply2_lb = canvs2.create_text(1025,475,text="2nd",font=('Calibri',90))    
     ply3 = canvs2.create_oval(300,350,550,600,fill="lavender")
     ply3_lb = canvs2.create_text(425,475,text="1st",font=('Calibri',90))
     label = tk.Label(root2, text=f"Counter: {count}", bg='gray',font=('Arial', 40))
