@@ -14,7 +14,7 @@ print("Waiting for people to join")
 
 # Bind the socket to a specific address and port
 host = '10.0.65.5'
-port = 12344
+port = 5555
 s.bind((host, port))
 IPS = 1 # max num of people able to join
 s.listen(IPS)
@@ -62,52 +62,63 @@ def start_game():
     label = tk.Label(root2, text=f"Counter: {count}", bg='gray',font=('Arial', 40))
     label.pack()
     # give increment to client, if odd then client's turn, if even then main's turn
-
-    def add(i):
-        global count
-        global increment
-        while (count + i) < 21:
-            break
-        count += i
-        label.config(text=f"Counter: {str(count)}")
-        print("INCREMENT HELLO")
-        increment += 1
-        print(increment)
-        
-        print(f"SOCKET SENDING INCREMENT HERE {increment}")
+    while count < 21:
         x = str(increment)
+        y = str(count)
+        client.sendall(str.encode(y))
         client.sendall(str.encode(x))
-    
 
-    if increment % 2 != 0:
-        print("Odd, Clients Turn")
-        client.sendall(str.encode("Your Turn"))
-        bt_1=tk.Button(root2,text="1",font=('Calibri',25),foreground='black',background="light goldenrod yellow",command=lambda: add(1))
-        bt_1.place(x=420, y=700)
-        bt_2=tk.Button(root2,text="2",font=('Calibri',25),foreground='black',background="light goldenrod yellow",command=lambda: add(2))
-        bt_2.place(x=720, y=700)
-        bt_3=tk.Button(root2,text="3",font=('Calibri',25),foreground='black',background="light goldenrod yellow",command=lambda: add(3))
-        bt_3.place(x=1020, y=700)
+        def disable(b1, b2, b3):
+            b1.config(state="disable")
+            b2.config(state="disable")
+            b3.config(state="disable")
+            
 
-        # Disable Button
-        bt_1.config(state="disabled")
-        bt_2.config(state="disabled")
-        bt_3.config(state="disabled")
+        def add(i, b1, b2, b3):
+            global count
+            global increment
+            while (count + i) < 21:
+                break
+            count += i
+            label.config(text=f"Counter: {str(count)}")
+            print("INCREMENT HELLO")
+            increment += 1
+            print(increment)
 
-    else:
-        print("Even, Main Turn")
+            disable(b1, b2, b3)
+            
 
-        #  Enabled Buttons
-        bt_1=tk.Button(root2,text="1",font=('Calibri',25),foreground='black',background="light goldenrod yellow",command=lambda: add(1))
-        bt_1.place(x=420, y=700)
-        bt_2=tk.Button(root2,text="2",font=('Calibri',25),foreground='black',background="light goldenrod yellow",command=lambda: add(2))
-        bt_2.place(x=720, y=700)
-        bt_3=tk.Button(root2,text="3",font=('Calibri',25),foreground='black',background="light goldenrod yellow",command=lambda: add(3))
-        bt_3.place(x=1020, y=700)
+            print(f"SOCKET SENDING INCREMENT HERE {increment}")
+            x = str(increment)
+            y = str(count)
+            client.sendall(str.encode(x)) # Increment
+            client.sendall(str.encode(y))
         
 
-    canvs2.pack()
-    root2.mainloop()
+        if increment % 2 == 0:
+            print("Even, Mains Turn")
+            bt_1=tk.Button(root2,text="1",font=('Calibri',25),foreground='black',background="light goldenrod yellow",command=lambda: add(1, bt_1, bt_2, bt_3) )
+            bt_1.place(x=420, y=700)
+            bt_2=tk.Button(root2,text="2",font=('Calibri',25),foreground='black',background="light goldenrod yellow",command=lambda: add(2, bt_1, bt_2, bt_3))
+            bt_2.place(x=720, y=700)
+            bt_3=tk.Button(root2,text="3",font=('Calibri',25),foreground='black',background="light goldenrod yellow",command=lambda: add(3, bt_1, bt_2, bt_3))
+            bt_3.place(x=1020, y=700)
+
+        else:
+            print("Odd, Clients Turn")
+
+            #  Disable Buttons
+            bt_1=tk.Button(root2,text="1",font=('Calibri',25),foreground='black',background="light goldenrod yellow")
+            bt_1.place(x=420, y=700)
+            bt_2=tk.Button(root2,text="2",font=('Calibri',25),foreground='black',background="light goldenrod yellow")
+            bt_2.place(x=720, y=700)
+            bt_3=tk.Button(root2,text="3",font=('Calibri',25),foreground='black',background="light goldenrod yellow")
+            bt_3.place(x=1020, y=700)
+
+            disable(bt_1, bt_2, bt_3)
+
+        canvs2.pack()
+        root2.mainloop()
 
 
 label_desp = tk.Label(root,text=para,font=('Arial',20),foreground='green')
