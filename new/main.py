@@ -13,10 +13,10 @@ name = input("Enter your name: ")
 print("Waiting for people to join")
 
 # Bind the socket to a specific address and port
-host = '10.0.65.5'
-port = 5555
+host = '10.0.65.8'
+port = 5556
 s.bind((host, port))
-IPS = 1 # max num of people able to join
+IPS = 2 # max num of people able to join
 s.listen(IPS)
 
 opp = ''
@@ -30,7 +30,9 @@ if IPS == 1:
 print(opp)
 
 # give signal to start
-client.sendall(str.encode("Start"))
+xyz=0
+s.sendall(str.encode("Start"))
+xyz+1
 
 root = Tk()
 root.title("21 Dares")
@@ -53,6 +55,7 @@ def start_game():
     w= root2.winfo_screenwidth()               
     h= root2.winfo_screenheight()  
     canvs2 = tk.Canvas(root2, height=900, width=1500)
+    turn_lb=tk.Label(root2,text="dash was here",font=('Arial', 40)).place(x=600,y=50)
     count_bx = canvs2.create_rectangle(600,50,850,300,fill="DarkSeaGreen1")
     ply1 = canvs2.create_oval(600,350,850,600,fill="lavender")
     ply1_lb = canvs2.create_text(725,475,text='1st',font=('Calibri',90))
@@ -124,5 +127,5 @@ def start_game():
 label_desp = tk.Label(root,text=para,font=('Arial',20),foreground='green')
 label_desp.pack(padx=5,pady=120)
 start_button=tk.Button(root,text="Start the game",font=('Calibri',35),foreground='brown',command = start_game).place(x=600,y=600)
-
+print(xyz)
 root.mainloop()
