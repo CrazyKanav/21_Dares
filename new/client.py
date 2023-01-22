@@ -4,9 +4,11 @@ from tkinter import *
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 
+count_c = 0
+increment_c = 0
 # Connect to the server
 host = '10.0.65.5'
-port = 5556
+port = 5555
 s.connect((host, port))
 
 print('Connected to the server')
@@ -31,6 +33,8 @@ if flag:
         # Create the second label
         label2 = tk.Label(root, text="opp",font=('Arial',40)).place(x=1040,y=420)
 
+
+
         def start_game():
             root.destroy()
             root2 = Tk()
@@ -45,40 +49,38 @@ if flag:
             ply2 = canvs2.create_oval(900,350,1150,600,fill="lavender")
             ply2_lb = canvs2.create_text(1025,475,text="2nd",font=('Calibri',90)) 
 
-            global count
-            count = int(s.recv(2048).decode())
-
             label = tk.Label(root2, text=f"Counter: {count}", bg='gray',font=('Arial', 40))
             label.pack()
-            flag = True
             # give increment to client, if odd then client's turn, if even then main's turn
-            while count < 21:
-                if flag == True:
-                    increment = s.recv(2048).decode()
-                    print("Increment " + increment)
-                else:
-                    continue
+            while count_c < 21:
 
                 def disable(b1, b2, b3):
                     b1.config(state="disable")
                     b2.config(state="disable")
                     b3.config(state="disable")
 
-                def add(i):
-                    increment = increment
-                    global count
-                    while (count + i) < 21:
+                def add(i, b1, b2, b3):
+                    global count_c
+                    global incrementer_c
+                    while (int(count) + int(i)) < 21:
                         break
-                    count += i
+                    count_c += i
                     label.config(text=f"Counter: {str(count)}")
                     print("INCREMENT HELLO")
-                    increment += 1
-                    print(increment)
+                    incrementer += 1
+                    print(incrementer)
+
+                    disable(b1, b2, b3)
+
+                    print(f"SOCKET SENDING INCREMENT HERE {increment}")
+                    x = str(incrementer)
+                    y = str(count)
+                    client.sendall(str.encode(x)) # Increment
+                    client.sendall(str.encode(y)) # Count
                 
 
-                if int(increment) % 2 == 0:
+                if int(incrementer) % 2 == 0: # Even
                     print("Even, Main's Turn")
-                    s.recv(1024).decode()
                     # Disable
                     bt_1=tk.Button(root2,text="1",font=('Calibri',25),foreground='black',background="light goldenrod yellow")
                     bt_1.place(x=420, y=700)
@@ -87,12 +89,11 @@ if flag:
                     bt_3=tk.Button(root2,text="3",font=('Calibri',25),foreground='black',background="light goldenrod yellow")
                     bt_3.place(x=1020, y=700)
 
-                    disable(bt_1, bt_2, bt_3)
-
-
                 else:
                     print("Odd, Client Turn")
-                    print(f"Increment: {increment} and Count: {count}")
+                    increment = x
+                    count = y
+                    print(x, y)
                     #  Enabled Buttons
                     bt_1=tk.Button(root2,text="1",font=('Calibri',25),foreground='black',background="light goldenrod yellow",command=lambda: add(1))
                     bt_1.place(x=420, y=700)
@@ -101,8 +102,8 @@ if flag:
                     bt_3=tk.Button(root2,text="3",font=('Calibri',25),foreground='black',background="light goldenrod yellow",command=lambda: add(3))
                     bt_3.place(x=1020, y=700)
 
-                    s.sendall(str.encode(x)) # Increment
-                    s.sendall(str.encode(y))
+                #     s.sendall(str.encode(x)) # Increment
+                #     s.sendall(str.encode(y))
 
                 
 

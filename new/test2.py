@@ -44,13 +44,15 @@ def update_frame():
 # Start updating the frame
 update_frame()
 
+def destroy():
+    root3.destroy()
 
 dare_txt_lb=tk.Label(root3,font=('Arial',20),fg='black',text="What dare do you want to give?").place(x=30, y=190)
 
 dare_txt=Entry(root3,fg='black',bg='palegreen1',font=('Arial',20)).place(x=50, y=230)
 lb_done = tk.Label(root3,text="Did you do the dare?",font=('Arial',20),foreground='sea green')
 lb_done.pack()
-bt_done = tk.Button(root3,text="Yes",font=('Calibri',25),foreground='black',background="lemon chiffon")
+bt_done = tk.Button(root3,text="Yes",font=('Calibri',25),foreground='black',background="lemon chiffon", command=destroy())
 bt_done.pack()
 
 root3.mainloop()

@@ -4,7 +4,7 @@ import socket
 from _thread import *
 
 count = 0
-increment = 0
+increment = 1
 # Create a socket object
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -14,7 +14,7 @@ print("Waiting for people to join")
 
 # Bind the socket to a specific address and port
 host = '10.0.65.5'
-port = 5556
+port = 5555
 s.bind((host, port))
 IPS = 1 # max num of people able to join
 s.listen(IPS)
@@ -26,8 +26,6 @@ if IPS == 1:
     print(f'Connection from {address} has been established.')
     msg = client.recv(1024).decode("utf-8")
     opp = msg
-
-print(opp)
 
 # give signal to start
 client.sendall(str.encode("Start"))
@@ -53,13 +51,13 @@ def start_game():
     w= root2.winfo_screenwidth()               
     h= root2.winfo_screenheight()  
     canvs2 = tk.Canvas(root2, height=900, width=1500)
-    count_bx = canvs2.create_rectangle(600,50,850,300,fill="DarkSeaGreen1")
+    turn_lb=tk.Label(root2,text=name,font=('Arial', 40)).place(x=600,y=50)
     ply1 = canvs2.create_oval(600,350,850,600,fill="lavender")
     ply1_lb = canvs2.create_text(725,475,text='1st',font=('Calibri',90))
     ply2 = canvs2.create_oval(900,350,1150,600,fill="lavender")
     ply2_lb = canvs2.create_text(1025,475,text="2nd",font=('Calibri',90)) 
 
-    label = tk.Label(root2, text=f"Counter: {count}", bg='gray',font=('Arial', 40))
+    label = tk.Label(root2, text=f"Let's See Who Does the Dare", bg='gray',font=('Arial', 80))
     label.pack()
     # give increment to client, if odd then client's turn, if even then main's turn
     while count < 21:
@@ -83,11 +81,24 @@ def start_game():
             label.config(text=f"Counter: {str(count)}")
             print("INCREMENT HELLO")
             increment += 1
+            print(increment)
+
             disable(b1, b2, b3)
             
+
+            print(f"SOCKET SENDING INCREMENT HERE {increment}")
+            x = str(increment)
+            y = str(count)
+            client.sendall(str.encode(x)) # Increment
+            client.sendall(str.encode(y))
+
+
         
 
         if increment % 2 == 0:
+
+            client.sendall(str.encode(y))
+            client.sendall(str.encode(x))
             print("Even, Mains Turn")
             bt_1=tk.Button(root2,text="1",font=('Calibri',25),foreground='black',background="light goldenrod yellow",command=lambda: add(1, bt_1, bt_2, bt_3) )
             bt_1.place(x=420, y=700)
@@ -95,9 +106,17 @@ def start_game():
             bt_2.place(x=720, y=700)
             bt_3=tk.Button(root2,text="3",font=('Calibri',25),foreground='black',background="light goldenrod yellow",command=lambda: add(3, bt_1, bt_2, bt_3))
             bt_3.place(x=1020, y=700)
+            x = str(increment)
+            y = str(count)
+            client.sendall(str.encode(y))
+            client.sendall(str.encode(x))
+
         else:
             print("Odd, Clients Turn")
-        
+            x = str(increment)
+            y = str(count)
+            client.sendall(str.encode(y))
+            client.sendall(str.encode(x))
             #  Disable Buttons
             bt_1=tk.Button(root2,text="1",font=('Calibri',25),foreground='black',background="light goldenrod yellow")
             bt_1.place(x=420, y=700)
@@ -108,7 +127,6 @@ def start_game():
 
             disable(bt_1, bt_2, bt_3)
 
-
         canvs2.pack()
         root2.mainloop()
 
@@ -116,5 +134,4 @@ def start_game():
 label_desp = tk.Label(root,text=para,font=('Arial',20),foreground='green')
 label_desp.pack(padx=5,pady=120)
 start_button=tk.Button(root,text="Start the game",font=('Calibri',35),foreground='brown',command = start_game).place(x=600,y=600)
-
 root.mainloop()
