@@ -3,11 +3,10 @@ import tkinter as tk
 from tkinter import *
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-count = 0
 
 # Connect to the server
-host = '10.0.65.8'
-port = 5556
+host = '10.0.65.5'
+port = 5555
 s.connect((host, port))
 
 print('Connected to the server')
@@ -46,51 +45,69 @@ if flag:
             ply2 = canvs2.create_oval(900,350,1150,600,fill="lavender")
             ply2_lb = canvs2.create_text(1025,475,text="2nd",font=('Calibri',90)) 
 
+            global count
+            count = int(s.recv(2048).decode())
+
             label = tk.Label(root2, text=f"Counter: {count}", bg='gray',font=('Arial', 40))
             label.pack()
 
-            increment = int(s.recv(1042).decode())
-
-            print(increment)
             # give increment to client, if odd then client's turn, if even then main's turn
+            while count < 21:
+                increment = s.recv(2048).decode()
+                print("Increment " + increment)
+                print("Count " + str(count))
+                incre_str = str(increment)
+                print(incre_str)
 
-            def add(i):
-                global count
-                count += i
-                label.config(text=f"Counter: {str(count)}")
-            
+                def disable(b1, b2, b3):
+                    b1.config(state="disable")
+                    b2.config(state="disable")
+                    b3.config(state="disable")
 
-            if increment % 2 == 0:
-                print("Even, Main's Turn")
-                bt_1=tk.Button(root2,text="1",font=('Calibri',25),foreground='black',background="light goldenrod yellow",command=lambda: add(1))
-                bt_1.place(x=420, y=700)
-                bt_2=tk.Button(root2,text="2",font=('Calibri',25),foreground='black',background="light goldenrod yellow",command=lambda: add(2))
-                bt_2.place(x=720, y=700)
-                bt_3=tk.Button(root2,text="3",font=('Calibri',25),foreground='black',background="light goldenrod yellow",command=lambda: add(3))
-                bt_3.place(x=1020, y=700)
+                def add(i):
+                    global count
+                    global increment
+                    while (count + i) < 21:
+                        break
+                    count += i
+                    label.config(text=f"Counter: {str(count)}")
+                    print("INCREMENT HELLO")
+                    increment += 1
+                    print(increment)
 
-                bt_1.config(state="disabled")
-                bt_2.config(state="disabled")
-                bt_3.config(state="disabled")
-            else:
-                print("Odd, Client Turn")
-                increment += 1
+                    print(f"SOCKET SENDING INCREMENT HERE {increment}")
+                    x = str(increment)
+                    y = str(count)
+                    client.sendall(str.encode(x)) # Increment
+                    client.sendall(str.encode(y))
+                
 
-                #  Enabled Buttons
-                bt_1=tk.Button(root2,text="1",font=('Calibri',25),foreground='black',background="light goldenrod yellow",command=lambda: add(1))
-                bt_1.place(x=420, y=700)
-                bt_2=tk.Button(root2,text="2",font=('Calibri',25),foreground='black',background="light goldenrod yellow",command=lambda: add(2))
-                bt_2.place(x=720, y=700)
-                bt_3=tk.Button(root2,text="3",font=('Calibri',25),foreground='black',background="light goldenrod yellow",command=lambda: add(3))
-                bt_3.place(x=1020, y=700)
+                if int(increment) % 2 == 0:
+                    print("Even, Main's Turn")
+                    bt_1=tk.Button(root2,text="1",font=('Calibri',25),foreground='black',background="light goldenrod yellow")
+                    bt_1.place(x=420, y=700)
+                    bt_2=tk.Button(root2,text="2",font=('Calibri',25),foreground='black',background="light goldenrod yellow")
+                    bt_2.place(x=720, y=700)
+                    bt_3=tk.Button(root2,text="3",font=('Calibri',25),foreground='black',background="light goldenrod yellow")
+                    bt_3.place(x=1020, y=700)
 
-            print(increment)
+                    disable(bt_1, bt_2, bt_3)
 
-            x = str(increment)
-            s.sendall(str.encode(x))
 
-            canvs2.pack()
-            root2.mainloop()
+                else:
+                    print("Odd, Client Turn")
+
+                    #  Enabled Buttons
+                    bt_1=tk.Button(root2,text="1",font=('Calibri',25),foreground='black',background="light goldenrod yellow",command=lambda: add(1))
+                    bt_1.place(x=420, y=700)
+                    bt_2=tk.Button(root2,text="2",font=('Calibri',25),foreground='black',background="light goldenrod yellow",command=lambda: add(2))
+                    bt_2.place(x=720, y=700)
+                    bt_3=tk.Button(root2,text="3",font=('Calibri',25),foreground='black',background="light goldenrod yellow",command=lambda: add(3))
+                    bt_3.place(x=1020, y=700)
+                
+
+                canvs2.pack()
+                root2.mainloop()
 
 
         label_desp = tk.Label(root,text=para,font=('Arial',20),foreground='green')
